@@ -15,8 +15,8 @@ class CreateEventButton extends React.Component {
       title: '',
       what: 'food-drinks',
       where: '',
-      longitude: '', 
-      latitude: '', 
+      longitude: '',
+      latitude: '',
       date: '',
       min: '',
       invitees: {},
@@ -121,8 +121,8 @@ class CreateEventButton extends React.Component {
       short_desc: this.state.what,
       description: this.state.description,
       location: this.state.where,
-      longitude: this.state.longitude, 
-      latitude: this.state.latitude, 
+      longitude: this.state.longitude,
+      latitude: this.state.latitude,
       date: this.state.selectedDays,
       min: this.state.min
     }
@@ -152,7 +152,7 @@ class CreateEventButton extends React.Component {
       longitude: longitudeVal
     })
   }
-  
+
   handleDayClick(day, { selected }) {
     const { selectedDays } = this.state;
     if (selected) {
@@ -161,7 +161,7 @@ class CreateEventButton extends React.Component {
       );
       selectedDays.splice(selectedIndex, 1);
     } else {
-      selectedDays.push(day);    
+      selectedDays.push(day);
       // Running into issues here .toString().replace('12:00:00 GMT-0800 (PST)')
     }
     this.setState({ selectedDays });
@@ -180,12 +180,12 @@ class CreateEventButton extends React.Component {
                 <div className="col-md-8">
                   <h4 className='create'>Name your Event:</h4>
                   <input
-                    className="event_name_input" 
-                    value={this.state.title} 
+                    className="event_name_input"
+                    value={this.state.title}
                     type="text"                    onChange={this.handleChange.bind(this, 'title')} required
-                    />
-                    <br />
-                    <br />
+                  />
+                  <br />
+                  <br />
                   <h4 className='create'>Pick an event category:</h4>
                   <select className="event_category" value={this.state.what} onChange={this.handleChange.bind(this, 'what')} required>
                     <option value="food-drinks" >Food/Drinks</option>
@@ -198,8 +198,8 @@ class CreateEventButton extends React.Component {
                   <br />
                   <h4 className='create'>Enter location:</h4>
                   <div>
-                    <Geosuggest 
-                      ref={el=>this._geoSuggest=el} 
+                    <Geosuggest
+                      ref={el=>this._geoSuggest=el}
                       placeholder="Where should we go?"
                       initialValue=""
                       onSuggestSelect={this.onSuggestSelect}
@@ -216,11 +216,11 @@ class CreateEventButton extends React.Component {
                   <br />
                   <br />
                   <h4 className='create'>Minimum friends for this event?</h4>
-                  <input 
+                  <input
                     value={this.state.min}
                     onChange={this.handleChange.bind(this, 'min')}
                     type="number" required
-                    />
+                  />
                 </div>
                 <div className="col-md-4">
                   <h4 className='create'>Invite Friends</h4>
@@ -230,21 +230,21 @@ class CreateEventButton extends React.Component {
                         key={i}
                         friend={friend}
                         inviteFriend={this.inviteFriend(friend)}
-                        />
-                      )
+                      />
+                    )
                     )
                   }
                 </div>
               </div>
               <div className="col-md-12">
-              <h4 className='description_input'>Description: </h4>
+                <h4 className='description_input'>Description: </h4>
               </div>
               <div className="col-md-12">
                 <input
-                className="description_input_field"
-                value={this.state.description}
-                onChange={this.handleChange.bind(this, 'description')}
-                type="text" required/>
+                  className="description_input_field"
+                  value={this.state.description}
+                  onChange={this.handleChange.bind(this, 'description')}
+                  type="text" required/>
               </div>
               <div className="col-md-12">
                 <button type="submit" className="submit_button">Submit</button>

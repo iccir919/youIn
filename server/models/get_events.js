@@ -16,11 +16,11 @@ module.exports = (id) => {
 
   return db.task( (t) => {
     return t.map(query, [id], (event) => {
-      
+
       let query = 'SELECT users.user_id, users.firstname, users.lastname, users.photoUrl FROM users \
       INNER JOIN users_events ON users_events.current_status = \'accepted\' \
       AND users_events.event_id=$1 AND users.user_id=users_events.user_id';
-      
+
       return t.manyOrNone(query, event.event_id)
         .then( (attendees) => {
           event.attendees = attendees;

@@ -1,7 +1,11 @@
 import React from 'react';
 import $ from 'jquery';
+<<<<<<< HEAD
 import ChatRoom from './ChatRoom.jsx'
 import { withGoogleMap } from "react-google-maps";
+=======
+import GoogleCalendar from './GoogleCalendar.jsx';
+>>>>>>> Implement Google Calendar using dummy data
 
 class OwnerDetailedView extends React.Component {
   constructor(props) {
@@ -84,8 +88,15 @@ class OwnerDetailedView extends React.Component {
         <div className="col-md-12 ">
           <ChatRoom eventId = {this.props.eventId} />
         </div>
+<<<<<<< HEAD
         <button id="owner-edit-button">Edit</button>
         <button onClick={this.deleteEvent} id="owner-delete-button" className="col-md-offset-1">Delete</button>
+=======
+
+        <GoogleCalendar/>
+
+        <button onClick={this.deleteEvent} id="owner-delete-button" className="col-md-offset-1">Delete this Event</button>
+>>>>>>> Implement Google Calendar using dummy data
       </div>
     );
   }

@@ -5,7 +5,6 @@ let bodyParser = require('body-parser');
 let cookieParser = require('cookie-parser');
 let session = require('express-session');
 let passport = require('./middleware/initPassport');
-let passporto = require('./middleware/googlePassport')
 let path = require('path');
 let handler = require('./routes/request_handler');
 // var queries = require('/models/socket_queries');
@@ -31,16 +30,9 @@ app.get('/events', passport.authenticate('facebook-token'), handler.getEvents);
 
 app.get('/users', handler.getUsers);
 
-// app.get('/auth/google/callback',
-//   passporto.authenticate('google', { failureRedirect: '/login' }),
-//   function(req, res) {
-//     // Successful authentication, redirect home.
-//     res.redirect('/');
-//   });
 app.get('/user', handler.getUser);
 
 app.get('/chatRoom', passport.authenticate('facebook-token'), handler.getChat);
-
 
 app.post('/events/users', passport.authenticate('facebook-token'), handler.addUsersEvents);
 
@@ -62,7 +54,7 @@ app.post('/chatRoom', passport.authenticate('facebook-token'), handler.insertCha
 app.get('/invites', passport.authenticate('facebook-token'), handler.inviteeList);
 
 app.post('/invites', passport.authenticate('facebook-token'), handler.invites);
-app.post('/invites', passport.authenticate('facebook-token'), handler.invites); 
+app.post('/invites', passport.authenticate('facebook-token'), handler.invites);
 
 app.get('/dates', passport.authenticate('facebook-token'), handler.dateVotes);
 
