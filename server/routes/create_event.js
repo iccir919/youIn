@@ -14,8 +14,8 @@ module.exports = function(req, res) {
 
   console.log('inside create_event', event);
   // query the database for events
-  db.one('INSERT into EVENTS (owner, title, short_desc, description, location, date, min)\
-  VALUES (${owner}, ${title}, ${short_desc}, ${description}, ${location}, ${date}, ${min}) returning event_id', event)
+  db.one('INSERT into EVENTS (owner, title, short_desc, description, location, longitude, latitude, date, min)\
+  VALUES (${owner}, ${title}, ${short_desc}, ${description}, ${location}, ${longitude}, ${latitude}, ${date}, ${min}) returning event_id', event)
   .then( (result) => {
     console.log('result from queryasync in create_event.js', result);
     res.status(201).json(result);

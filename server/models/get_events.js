@@ -7,6 +7,8 @@ module.exports = (id) => {
   events.short_desc,\
   events.description,\
   events.location,\
+  events.longitude,\
+  events.latitude,\
   events.date,\
   events.min\
   FROM EVENTS INNER JOIN users_events \

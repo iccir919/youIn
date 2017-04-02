@@ -1,6 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import ChatRoom from './ChatRoom.jsx'
+import { withGoogleMap } from "react-google-maps";
 
 class OwnerDetailedView extends React.Component {
   constructor(props) {
@@ -8,15 +9,16 @@ class OwnerDetailedView extends React.Component {
     this.state = {
       confirm: false
     }
-    //bind methods here
     this.deleteEvent = this.deleteEvent.bind(this);
     this.updateEventStatus = this.updateEventStatus.bind(this);
+    this.initMap = this.initMap.bind(this);
   }
-  //insert methods here
 
+  componentDidMount() {
+    this.initMap();
+  }
 
   updateEventStatus(url) {
-    // AJAX request to delete event from users list in the database
     $.ajax({
       url: url,
       method: 'POST',
@@ -41,7 +43,26 @@ class OwnerDetailedView extends React.Component {
   deleteEvent () {
     console.log('event DELETED!');
     this.updateEventStatus('/delete/owner');
+  }
 
+  initMap() {
+    console.log(this.props.event);
+    var map = new google.maps.Map(document.getElementById(`${this.props.event.event_id}-map`), {
+      zoom: 15,
+      center: {
+        lat: this.props.event.latitude,
+        lng: this.props.event.longitude
+      },
+    });
+    console.log('latitude', this.props.event.latitude);
+    console.log('longitude', this.props.event.longitude);
+    var marker = new google.maps.Marker({
+      position: {
+        lat: this.props.event.latitude,
+        lng: this.props.event.longitude
+      },
+      map: map
+    });
   }
 
   render() {
@@ -51,24 +72,23 @@ class OwnerDetailedView extends React.Component {
       <div id="event-details" className="event-details row list-item">
         <div className="col-md-8 col-md-offset-1">
           <p>{this.props.event.description}</p>
-          <p>We're meeting at: {this.props.event.location}</p>
+          <p>{this.props.event.location}</p>
           <div className="attendees">
             <h4> Attendees: </h4>
             <ul>
               {attendees.map((attendee, i) => <li key={i}>{attendee.firstname}</li>)}
             </ul>
           </div>        
+          <div className="google-map" id={`${this.props.event.event_id}-map`}></div>
         </div>
         <div className="col-md-12 ">
           <ChatRoom eventId = {this.props.eventId} />
         </div>
-        <button onClick={this.deleteEvent} id="owner-delete-button" className="col-md-offset-1">Delete this Event</button>
+        <button id="owner-edit-button">Edit</button>
+        <button onClick={this.deleteEvent} id="owner-delete-button" className="col-md-offset-1">Delete</button>
       </div>
     );
   }
 }
 
 export default OwnerDetailedView;
-
-
-// {this.state.confirm === false ? "Delete this Event" : "Are you sure?"}

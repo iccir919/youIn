@@ -1,6 +1,6 @@
 
 .page-header {
-  background: url(./media_lib/youInLogo.png) 50% 50% no-repeat;
+  background: url(./media_lib/LogoMakr-layerExport.png) 50% 50% no-repeat;
   border-radius: 8px;
   height: 150px;
   color: white;
@@ -24,24 +24,37 @@
 #logout {
   font-family: sans-serif;
   font-size: 20px;
-  padding: 8px 8px 8px 8px;
-  color: black;
-  background-color: #7c9ac9;
+  width: 100px;
+  height: 40px;
+  color: white;
+  background-color: #4c4c4c;
+  /*padding: 10px 1px 10px 1px;*/
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+  border: none;
   float: right;
+  box-shadow: 0 2px #b2b2b2;
 }
+
+#logout:hover {background-color: #666666}
+
+#logout:active {
+  background-color: #4c4c4c;
+  box-shadow: 0 2px #b2b2b2;
+  transform: translateY(3px);
+}
+
 
 #userName {
   float: left;
   margin: 0px;
-  color: #800000;
-}
-
-.login {
-  /*background-color: rgba(161, 23, 45, 0.7)*/
+  font-weight: bold;
+  color: #e13434;
 }
 
 body {
-  background: url(./media_lib/campfire-984020_1920.jpg) no-repeat center center fixed;
+  background: url(./media_lib/picnic-1208229_1920.jpg) no-repeat center center fixed;
   -webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
@@ -61,24 +74,37 @@ h2, h4 {
   vertical-align: text-bottom;
   text-align: center;
   color: white;
+  font-size: 22px;
   font-family: Roboto, sans-serif;
-  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+  /*text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;*/
 }
-p, li {
+  
+.event_name_p {
+  color: #c5c2c2;
+}
+
+.event_description {
   color: white;
-
-/*p, li {
-  color: black;
-
-  font-family: Roboto, sans-serif;
-  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
-}*/
+}
 
 .create {
   font-family: Roboto, sans-serif;
   color: black;
   text-shadow: none;
   text-align: left;
+  margin-left: 10px;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.description_input {
+  font-family: Roboto, sans-serif;
+  color: black;
+  text-shadow: none;
+  text-align: left;
+  margin-left: -5px;
+  margin-top: 20px;
+  margin-bottom: 10px;
 }
 
 .list-item {
@@ -93,7 +119,7 @@ p, li {
   background-color: rgba(2,2,2,.5);
   border-radius: 5px;
   color: white;
-  text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;
+  /*text-shadow: 1px 0 0 #000, 0 -1px 0 #000, 0 1px 0 #000, -1px 0 0 #000;*/
 }
 
 .panel {
@@ -149,7 +175,7 @@ button */
   border-right: #364e92 1px solid;
   background: url('https://s3-us-west-2.amazonaws.com/s.cdpn.io/14082/icon_facebook.png') 6px 6px no-repeat;
 }
-.loginBtn--facebook:hover,
+
 .loginBtn--facebook:focus {
   background-color: #5B7BD5;
   background-image: linear-gradient(#5B7BD5, #4864B1);
@@ -182,45 +208,70 @@ button */
 
 #create_event {
   font-family: sans-serif;
-  font-size: 32px;
+  font-size: 20px;
+  width: 200px;
+  height: 50px;
   color: white;
-  background-color: #800000;
-  padding: 12px 12px 12px 12px;
-  border-radius: 12px;
+  background-color: #e13434;
+  border-radius: 2px;
   cursor: pointer;
   outline: none;
   border: none;
-  box-shadow: 0 2px #b2b2b2;
+  display: box;
+  margin-top: 30px;
+  margin-left: 950px;
+  position: absolute;
 }
 
-#create_event:hover {background-color: #b80101}
+#create_event:hover {background-color: #d02b2b}
 
 #create_event:active {
-  background-color: #800000;
-  box-shadow: 0 2px #b2b2b2;
+  background-color: #e13434;
   transform: translateY(3px);
+}
+
+.event_name_input {
+  margin-left: 10px;
+}
+
+.event_category {
+  margin-left: 10px;
+}
+
+.select_date {
+  margin-left: 10px;
+}
+
+.minimum_number {
+  margin-left: 10px;
+}
+
+.description_input_field {
+  margin-left: -5px;
+  margin-bottom: 10px;
 }
 
 .invite_friends {
   font-family: sans-serif;
-  font-size: 32px;
+  font-size: 20px;
+  width: 200px;
+  height: 50px;
   color: white;
-  background-color: #f47676;
-  padding: 12px 12px 12px 12px;
-  border-radius: 12px;
-  text-align: center;
-  float: right;
+  background-color: #f99702;
+  border-radius: 2px;
   cursor: pointer;
   outline: none;
+  margin-top: 30px;
+  margin-right: 200px;
   border: none;
-  box-shadow: 0 2px #b2b2b2;
+  float: right;
+  position: relative;
 }
-  
-.invite_friends:hover {background-color: #f69191}
 
+.invite_friends:hover {background-color: #e78c00}
+  
 .invite_friends:active {
-  background-color: #f47676;
-  box-shadow: 0 2px #b2b2b2;
+  background-color: #f99702;
   transform: translateY(3px);
 }
 
@@ -231,28 +282,37 @@ button */
   text-align: center;
 }
 
+.google-map {
+  height: 200px;
+  width: 60%;
+  margin-bottom: 50px;
+}
+
+
 #my-events-title {
   font-weight: bold;
-  font-size: 42px;
+  font-size: 30px;
   text-align: left;
   padding-left: 40px;
-  color: #800000;
-  text-shadow: 1px 0 0 white, 0 -1px 0 white, 0 1px 0 white, -1px 0 0 white;
+  color:  #e13434;
+  text-shadow: 1px 1px #323232;
+  /*text-shadow: 1px 0 0 white, 0 -1px 0 white, 0 1px 0 white, -1px 0 0 white;*/
 }
 
 #friend-events-title {
   font-weight: bold;
-  font-size: 42px;
+  font-size: 30px;
   text-align: left;
   padding-left: 40px;
-  color: #800000;
-  text-shadow: 1px 0 0 white, 0 -1px 0 white, 0 1px 0 white, -1px 0 0 white;
+  color:  #e13434;
+  text-shadow: 1px 1px #323232;
+  /*text-shadow: 1px 0 0 white, 0 -1px 0 white, 0 1px 0 white, -1px 0 0 white;*/
 }
 
 #headerName {
-  font-weight: bold;
-  color: white;
-  text-shadow: 1px 0 0 black, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black;
+  /*font-weight: bold;*/
+  color: #4c4c4c;
+  /*text-shadow: 1px 0 0 black, 0 -1px 0 black, 0 1px 0 black, -1px 0 0 black;*/
 }
 
 .goingButton {
@@ -260,10 +320,65 @@ button */
   background-color: #9fa3b7;
 }
 
+/*edit button*/
+#owner-edit-button {
+  border-radius: 1px;
+  background-color: #f99702;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  width: 100px;
+  margin-left: 150px;
+  margin-top: 170px;
+  box-shadow: 0 2px #323232;
+}
+
+#owner-edit-button:hover {background-color: #e78c00}
+
+#owner-edit-button:active {
+  background-color: #f99702;
+  /*box-shadow: 0 2px #b2b2b2;*/
+  transform: translateY(3px);
+}
+
+.submit_button {
+  margin-bottom: 10px;
+  margin-left: 180px;
+  width: 80px;
+  height: 30px;
+  font-family: sans-serif;
+  background-color: #e13434;
+  color: white;
+  border-radius: 2px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+}
+
+#submit_button:hover {background-color: #d02b2b}
+
+#submit_button:active {
+  background-color: #e13434;
+  /*box-shadow: 0 2px #b2b2b2;*/
+  transform: translateY(3px);
+}
+
+/*delete button*/
 #owner-delete-button {
-  border-radius: 12px;
-  background-color: #f47927;
-  color: black;
+  border-radius: 1px;
+  background-color: #bc3231;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
+  outline: none;
+  border: none;
+  width: 100px;
+  margin-left: 150px;
+  margin-top: 10px;
+  margin-bottom: 50px;
+  box-shadow: 0 2px #323232;
 }
 /* DayPicker Calendar styles */
 
@@ -388,15 +503,93 @@ button */
   background-color: #4A90E2;
 }
 
-.attendees {
-  float: right;
+#owner-delete-button:hover {background-color: #7f2221}
+
+#owner-delete-button:active {
+  background-color: #bc3231;
+  /*box-shadow: 0 2px #b2b2b2;*/
+  transform: translateY(3px);
 }
 
-form { background: #000; padding: 3px; bottom: 0; width: 100%; }
-form input { border: 0; padding: 10px; width: 90%; margin-right: .5%;  }
-form button { width: 9%; background: rgb(130, 224, 255); border: none; padding: 10px; }
+/*Geosuggest autocomplete styling*/
+
+.geosuggest {
+  font-size: 35px;
+  font-size: 1rem;
+  position: relative;
+  width: 50%;
+  margin: 1em auto;
+  text-align: left;
+}
+
+.geosuggest__input {
+  width: 200%;
+  /*border: 2px solid transparent;*/
+  /*box-shadow: 0 0 1px #3d464d;*/
+  font-size: 15px;
+  padding: .3em 1em;
+  float: left;
+  -webkit-transition: border 0.2s, box-shadow 0.2s;
+  transition: border 0.2s, box-shadow 0.2s;
+  margin-left: -70px;
+}
+
+.geosuggest__input:focus {
+  /*border-color: #267dc0;*/
+  /*box-shadow: 0 0 0 transparent;*/
+}
+
+.geosuggest__suggests {
+  position: absolute;
+  top: 100%;
+  left: -70;
+  right: -90;
+  max-height: 25em;
+  padding: 0;
+  margin-top: 40px;
+  background: #fff;
+  /*border: 2px solid #267dc0;*/
+  border-top-width: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  list-style: none;
+  z-index: 5;
+  -webkit-transition: max-height 0.2s, border 0.2s;
+  transition: max-height 0.2s, border 0.2s;
+}
+
+.geosuggest__suggests--hidden {
+  max-height: 0;
+  overflow: hidden;
+  border-width: 0;
+}
 
 
+/**
+ * A geosuggest item
+ */
+
+.geosuggest__item {
+  font-size: 5px;
+  font-size: 2rem;
+  padding: .5em .65em;
+  cursor: pointer;
+}
+
+.geosuggest__item:hover,
+.geosuggest__item:focus {
+  background: #f5f5f5;
+}
+
+.geosuggest__item--active {
+  background: #267dc0;
+  color: #fff;
+}
+
+.geosuggest__item--active:focus {
+  background: #ccc;
+}
+  
 #m {
   color: black;
 }

@@ -10,15 +10,14 @@ class OwnerEventListItem extends React.Component {
       clicked: false,
       result: ''
     }
-    //bind methods here
     this.handleClickListItem = this.handleClickListItem.bind(this);
     this.handleVotes = this.handleVotes.bind(this);
   }
+
   componentDidMount() {
     this.handleVotes();
   }
 
-  //Insert Methods Here
   handleClickListItem() {
     this.setState({clicked: !this.state.clicked});
     if (this.state.clicked) {
@@ -76,7 +75,7 @@ class OwnerEventListItem extends React.Component {
         <div className="col-sm-3">{this.props.event.attendees.length}<span> people IN</span></div>
         <br/>
       </div>
-        {this.state.clicked ? <OwnerDetailedView eventId = {this.props.event.event_id} accessToken={this.props.accessToken} event={this.props.event}/> : '' }
+        <OwnerDetailedView eventId = {this.props.event.event_id} accessToken={this.props.accessToken} event={this.props.event}/>
       </div>
     );
   }

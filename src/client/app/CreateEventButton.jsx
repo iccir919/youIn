@@ -3,9 +3,9 @@ import {render} from 'react-dom';
 import FriendsListItem from './FriendsListItem.jsx';
 import Modal from 'boron/DropModal';
 import $ from 'jquery';
+import Geosuggest from 'react-geosuggest';
 import DayPicker, { DateUtils } from 'react-day-picker';
 
-//trying to force a webpack build
 class CreateEventButton extends React.Component {
   constructor(props) {
     super(props);
@@ -15,24 +15,24 @@ class CreateEventButton extends React.Component {
       title: '',
       what: 'food-drinks',
       where: '',
-      time: '',
+      longitude: '', 
+      latitude: '', 
+      date: '',
       min: '',
       invitees: {},
       description: '',
       selectedDays: []
     }
-
     this.handleSubmit = this.handleSubmit.bind(this);
     this.inviteFriend = this.inviteFriend.bind(this);
     this.addToUsers_Events = this.addToUsers_Events.bind(this);
+    this.onSuggestSelect = this.onSuggestSelect.bind(this);
     this.handleDayClick = this.handleDayClick.bind(this);
-
   }
 
   componentDidMount() {
     this.setState({friends: this.props.friends})
   }
-
 
   showModal () {
     this.refs.modal.show();
@@ -68,7 +68,6 @@ class CreateEventButton extends React.Component {
       }
     } else {
       return () => {
-
         this.setState((prevState, props) => {
           let clicked = prevState.clicked;
           let invitees = prevState.invitees;
@@ -82,10 +81,6 @@ class CreateEventButton extends React.Component {
   }
 
   addToUsers_Events(eventId) {
-    //post request on new route, events/users
-    //include user ids from attendees
-    //include data from the event that was created
-
     let users = this.state.invitees;
     let userIds = [];
     for(let i in users) {
@@ -95,7 +90,6 @@ class CreateEventButton extends React.Component {
       userIds: userIds,
       eventId: eventId,
     }
-
     $.ajax({
       url: '/events/users',
       method: 'POST',
@@ -118,7 +112,6 @@ class CreateEventButton extends React.Component {
     });
   }
 
-
   handleSubmit (event) {
     let context = this;
     event.preventDefault();
@@ -128,6 +121,8 @@ class CreateEventButton extends React.Component {
       short_desc: this.state.what,
       description: this.state.description,
       location: this.state.where,
+      longitude: this.state.longitude, 
+      latitude: this.state.latitude, 
       date: this.state.selectedDays,
       min: this.state.min
     }
@@ -144,10 +139,20 @@ class CreateEventButton extends React.Component {
       console.log('error in ajax request in CreateEventButton', err);
       this.props.history.push('/');
     }
-  })
-
+    });
   }
 
+  onSuggestSelect (suggest) {
+    var location = suggest.label;
+    var latitudeVal = suggest.location.lat;
+    var longitudeVal = suggest.location.lng;
+    this.setState({
+      where: location,
+      latitude: latitudeVal,
+      longitude: longitudeVal
+    })
+  }
+  
   handleDayClick(day, { selected }) {
     const { selectedDays } = this.state;
     if (selected) {
@@ -173,32 +178,43 @@ class CreateEventButton extends React.Component {
             <form onSubmit={this.handleSubmit.bind(this)}>
               <div className="row">
                 <div className="col-md-8">
-                  <h4 className='create'>Give your event a title</h4>
-                  <input 
+                  <h4 className='create'>Name your Event:</h4>
+                  <input
+                    className="event_name_input" 
                     value={this.state.title} 
-                    type="text"
-                    onChange={this.handleChange.bind(this, 'title')} required
+                    type="text"                    onChange={this.handleChange.bind(this, 'title')} required
                     />
-
-                  <h4 className='create'>Pick an event category</h4>
-                  <select value={this.state.what} onChange={this.handleChange.bind(this, 'what')} required>
+                    <br />
+                    <br />
+                  <h4 className='create'>Pick an event category:</h4>
+                  <select className="event_category" value={this.state.what} onChange={this.handleChange.bind(this, 'what')} required>
                     <option value="food-drinks" >Food/Drinks</option>
                     <option value="indoor-activity">Indoor Activity</option>
                     <option value="outdoor-activity">Outdoor Activity</option>
                     <option value="hangout">Hangout</option>
                     <option value="other">Other</option>
                   </select>
-                  <h4 className='create'>Where?</h4>
-                  <input 
-                    value={this.state.where}
-                    onChange={this.handleChange.bind(this, 'where')}
-                    type="text" required
-                    />
-                  <h4 className='create'>When?</h4>
+                  <br />
+                  <br />
+                  <h4 className='create'>Enter location:</h4>
+                  <div>
+                    <Geosuggest 
+                      ref={el=>this._geoSuggest=el} 
+                      placeholder="Where should we go?"
+                      initialValue=""
+                      onSuggestSelect={this.onSuggestSelect}
+                      location={new google.maps.LatLng(37.7836924, -122.40896659999999)}
+                      radius="10" />
+                  </div>
+                  <br />
+                  <br />
+                  <h4 className='create'>Select a date</h4>
                   <DayPicker
                     selectedDays={ this.state.selectedDays }
                     onDayClick={ this.handleDayClick }
                   />
+                  <br />
+                  <br />
                   <h4 className='create'>Minimum friends for this event?</h4>
                   <input 
                     value={this.state.min}
@@ -206,7 +222,6 @@ class CreateEventButton extends React.Component {
                     type="number" required
                     />
                 </div>
-
                 <div className="col-md-4">
                   <h4 className='create'>Invite Friends</h4>
                   {
@@ -220,27 +235,20 @@ class CreateEventButton extends React.Component {
                     )
                   }
                 </div>
-
               </div>
-
-
               <div className="col-md-12">
-                <h4 className='create'>Description: </h4>
+              <h4 className='description_input'>Description: </h4>
               </div>
-
-
               <div className="col-md-12">
                 <input
+                className="description_input_field"
                 value={this.state.description}
                 onChange={this.handleChange.bind(this, 'description')}
                 type="text" required/>
               </div>
-
-
               <div className="col-md-12">
-                <button type="submit">See Who's In!</button>
+                <button type="submit" className="submit_button">Submit</button>
               </div>
-
             </form>
           </div>
         </Modal>
@@ -250,9 +258,3 @@ class CreateEventButton extends React.Component {
 }
 
 export default CreateEventButton;
-
-//click the name and the style changes
-//an array (in state?) that holds all of the people taken from the DB
-//Display those people's names via the friendsListItem component.
-//click the name and add the person to an array of people (with access to all of their information)
-//deselect them and take them out of the array that holds their information.
