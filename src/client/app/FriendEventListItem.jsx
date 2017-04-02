@@ -18,9 +18,11 @@ class FriendEventListItem extends React.Component {
     this.checkEventStatus = this.checkEventStatus.bind(this);
     this.handleDate = this.handleDate.bind(this);
   }
+
   componentDidMount() {
     this.checkEventStatus();
   }
+
   //Insert Methods Here
   handleClickListItem() {
     this.setState({clicked: !this.state.clicked});
@@ -60,7 +62,6 @@ class FriendEventListItem extends React.Component {
     })
   }
 
-
   onRejectClick() {
     this.setState({ accepted: false, rejected: true, attendees: this.props.event.attendees.length });
   }
@@ -93,28 +94,28 @@ class FriendEventListItem extends React.Component {
     let accepted = this.state.accepted === true ? "accepted" : null;
     let rejected = this.state.rejected === true ? "rejected" : null;
 
-
     return (
       <div>
-      <div className="panel list-item row" onClick={this.handleClickListItem}>
-        <div className="glyphicon glyphicon-globe col-sm-1"></div>
-        <div className={`${accepted} ${rejected} col-sm-4`}>{this.props.event.title}</div>
-        <div className="col-sm-4">
-          {this.props.event.date.replace(/({|})/g,'').split(',').map((date, i) => (
-            <div key={i}>
-              <input type="radio" value={new Date(date).toDateString()} onClick={this.handleDate}/> {new Date(date).toDateString()}
-            </div>
-          ))}
+        <div className="panel list-item row" onClick={this.handleClickListItem}>
+          <div className="glyphicon glyphicon-globe col-sm-1"></div>
+          <div className={`${accepted} ${rejected} col-sm-4`}>{this.props.event.title}</div>
+          <div className="col-sm-4">
+            {this.props.event.date.replace(/({|})/g,'').split(',').map((date, i) => (
+              <div key={i}>
+                <input type="radio" value={new Date(date).toDateString()} onClick={this.handleDate}/> {new Date(date).toDateString()}
+              </div>
+            ))}
+          </div>
+          <div className={`${accepted} ${rejected} col-sm-3`}>{this.state.attendees}<span> people IN</span></div>
+          <br/>
         </div>
-        <div className={`${accepted} ${rejected} col-sm-3`}>{this.state.attendees}<span> people IN</span></div>
-        <br/>
-      </div>
-      <FriendDetailedView
+        <p>You will be notified via Google Calendar when the event organizer finalizes the event date</p>
+        <FriendDetailedView
           updateFriendEvents={this.props.updateFriendEvents}
           accessToken={this.props.accessToken}
           onIn={this.onAcceptClick.bind(this)}
           onOut={this.onRejectClick.bind(this)}
-          event={this.props.event} 
+          event={this.props.event}
           eventId = {this.props.event.event_id} /> : '' }
 
       </div>
@@ -123,5 +124,3 @@ class FriendEventListItem extends React.Component {
 }
 
 export default FriendEventListItem;
-
-

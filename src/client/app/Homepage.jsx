@@ -66,7 +66,8 @@ class Homepage extends React.Component {
               ownerEventsArr={this.props.ownerEvents}
               accessToken={this.props.accessToken}
               getEvents={this.props.getEvents}
-              history={this.props.history}/>
+              history={this.props.history}
+              friends={this.props.friends}/>
           </div>
           <br /><br />
           <div className='container events'>

@@ -5,18 +5,13 @@ class GoogleCalendar extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      oAuthFinished: false
-    }
+      adminEmail: ''
+    };
     this.handleAuthClick = this.handleAuthClick.bind(this);
-    this.handleSignoutClick = this.handleSignoutClick.bind(this);
     this.initClient = this.initClient.bind(this);
     this.updateSigninStatus = this.updateSigninStatus.bind(this);
-    this.makeApiCall = this.makeApiCall.bind(this);
+    this.setCalendarEvent = this.setCalendarEvent.bind(this);
   }
-
-  // componentDidMount () {
-  //   this.handleClientLoad();
-  // }
 
   handleClientLoad() {
     // Load the API client and auth2 library
@@ -28,51 +23,58 @@ class GoogleCalendar extends React.Component {
       apiKey: process.env.GOOGLE_API_KEY,
       discoveryDocs: ['https://www.googleapis.com/discovery/v1/apis/calendar/v3/rest'],
       clientId: '107027858208-ord98kfhrp4f02embrfh1c50229ef00q.apps.googleusercontent.com',
+      fetch_basic_profile: true,
       scope: 'https://www.googleapis.com/auth/calendar'
     }).then(() => {
       // Listen for sign-in state changes.
-      gapi.auth2.getAuthInstance().isSignedIn.listen(this.updateSigninStatus);
+      gapi.auth2.getAuthInstance().isSignedIn;
+
+      if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+        var profile = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
+        var adminEmail = profile.getEmail();
+        this.setState({adminEmail: adminEmail});
+        console.log(this.state.adminEmail);
+      }
+
       // Handle the initial sign-in state.
       this.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
       gapi.auth2.getAuthInstance().signIn();
-      // this.setState({oAuthFinished: true});
+
     });
   }
 
   updateSigninStatus(isSignedIn) {
-    var authorizeButton = document.getElementById('authorize-button');
-    var signoutButton = document.getElementById('signout-button');
     if (isSignedIn) {
-      // authorizeButton.style.display = 'none';
-      // signoutButton.style.display = 'block';
-      this.makeApiCall();
+      this.setCalendarEvent();
     }
-    // else {
-    //   authorizeButton.style.display = 'block';
-    //   signoutButton.style.display = 'none';
-    // }
   }
 
   handleAuthClick(event) {
+    event.preventDefault();
     this.handleClientLoad();
-    // if (this.state.oAuthFinished) {
-    //   gapi.auth2.getAuthInstance().signIn();
-    // }
-  }
-
-  handleSignoutClick(event) {
-    // this.handleClientLoad();
-    gapi.auth2.getAuthInstance().signOut();
   }
 
   // Load the API and make an API call.  Display the results on the screen.
-  makeApiCall() {
-    var eventName = 'Google I/O 2015';
+  setCalendarEvent() {
+    console.log(this.props.event);
+
+    var emails = [];
+
+    for (var i = 0; i < this.props.friends.length; i++) {
+      emails.push(this.props.friends[i].email);
+    }
+
+    var apiEmailArray = [];
+    for (var i = 0; i < emails.length; i++) {
+      apiEmailArray.push({'email': emails[i]});
+    }
+
     var event = {
-      'summary': eventName,
-      'location': '800 Howard St., San Francisco, CA 94103',
-      'description': 'A chance to hear more about Google\'s developer products.',
+      'summary': this.props.event.title,
+      'location': this.props.event.location,
+      'description': this.props.event.description,
       'start': {
+        // 'dateTime': this.props.event.time,
         'dateTime': '2017-04-02T09:00:00-07:00',
         'timeZone': 'America/Los_Angeles'
       },
@@ -80,17 +82,14 @@ class GoogleCalendar extends React.Component {
         'dateTime': '2017-04-02T17:00:00-07:00',
         'timeZone': 'America/Los_Angeles'
       },
-      'attendees': [
-        {'email': 'johnny.chen54@gmail.com'},
-        {'email': 'mc840809@gmail.com'}
-      ]
+      'attendees': apiEmailArray
     };
 
     gapi.client.calendar.events.insert({
       'calendarId': 'primary',
       'resource': event
     }).then(() => {
-      console.log(`Event: '${eventName}' is now set on your Google Calendar`);
+      console.log(`Event: '${this.props.event.title}' is now set on your Google Calendar`);
     });
 
     console.log('making api call');
@@ -100,7 +99,6 @@ class GoogleCalendar extends React.Component {
     return (
       <div>
         <button onClick={this.handleAuthClick} id="authorize-button">Set Event on Google Calendar</button>
-        <button onClick={this.handleSignoutClick} id="signout-button" style={{display: "none"}}>Sign Out</button>
       </div>
     )
   }

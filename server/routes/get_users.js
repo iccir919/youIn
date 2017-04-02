@@ -3,7 +3,6 @@
 let db = require('../config');
 
 module.exports = function(req, res) {
-  
   db.query('select * from users')
   .then ( (users) => {
     res.status(200).json(users);

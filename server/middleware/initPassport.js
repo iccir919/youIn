@@ -1,6 +1,7 @@
 let passport = require('passport');
 let FacebookTokenStrategy = require('passport-facebook-token');
 let db = require('../config.js');
+require('dotenv').config();
 
 passport.use(new FacebookTokenStrategy({
   clientID: process.env.CLIENT_ID,

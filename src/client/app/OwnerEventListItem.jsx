@@ -2,6 +2,7 @@ import React from 'react';
 import OwnerDetailedView from './OwnerDetailedView.jsx';
 import moment from 'moment';
 import $ from 'jquery';
+import GoogleCalendar from './GoogleCalendar.jsx';
 
 class OwnerEventListItem extends React.Component {
   constructor(props) {
@@ -61,22 +62,23 @@ class OwnerEventListItem extends React.Component {
     return (
       <div>
         <div className="panel list-item row" onClick={this.handleClickListItem}>
-        <div className="glyphicon glyphicon-globe col-sm-1"></div>
-        <div className="col-sm-4">{this.props.event.title}</div>
-        <div className="col-sm-4">
-          <div>
-          { this.state.votes &&
-            this.state.votes.map((vote, i) => (
-            <li key={i} result={new Date(vote.date).toDateString()} onClick={this.setResult}>{new Date(vote.date).toDateString()}: {vote.count}</li>
-          ))}
-          </div>
+          <div className="glyphicon glyphicon-globe col-sm-1"></div>
+          <div className="col-sm-4">{this.props.event.title}</div>
+          <div className="col-sm-4">
+            <div>
+              { this.state.votes &&
+                this.state.votes.map((vote, i) => (
+                  <li key={i} result={new Date(vote.date).toDateString()} onClick={this.setResult}>{new Date(vote.date).toDateString()}: {vote.count}</li>
+                ))}
+            </div>
 
+          </div>
+          <div className="col-sm-3">{this.props.event.attendees.length}<span> people IN</span></div>
+          <br/>
         </div>
-        <div className="col-sm-3">{this.props.event.attendees.length}<span> people IN</span></div>
-        <br/>
-      </div>
-        <OwnerDetailedView eventId = {this.props.event.event_id} accessToken={this.props.accessToken} event={this.props.event}/>
-      </div>
+        <p>Click to send Google Calendar Invite to all event participants</p>
+        <GoogleCalendar event={this.props.event} friends={this.props.friends}/>
+        <OwnerDetailedView eventId = {this.props.event.event_id} accessToken={this.props.accessToken} event={this.props.event}/>      </div>
     );
   }
 }
