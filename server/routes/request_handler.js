@@ -17,4 +17,4 @@ module.exports.dateVotes = require('./dateVotes');
 module.exports.getUser = require('./get_user');
 module.exports.insertChat = require('./insert_chat');
 module.exports.getChat = require('./get_chat');
-
+module.exports.getAttendeesEmails = require('./get_attendees_emails');

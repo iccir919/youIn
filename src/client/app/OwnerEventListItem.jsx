@@ -77,7 +77,7 @@ class OwnerEventListItem extends React.Component {
           <br/>
         </div>
         <p>Click to send Google Calendar Invite to all event participants</p>
-        <GoogleCalendar event={this.props.event} friends={this.props.friends}/>
+        <GoogleCalendar event={this.props.event} friends={this.props.friends} result={this.state.result}/>
         <OwnerDetailedView eventId = {this.props.event.event_id} accessToken={this.props.accessToken} event={this.props.event}/>      </div>
     );
   }

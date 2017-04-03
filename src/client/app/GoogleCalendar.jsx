@@ -5,12 +5,18 @@ class GoogleCalendar extends React.Component {
   constructor (props) {
     super(props);
     this.state = {
-      adminEmail: ''
+      adminEmail: '',
+      attendeesEmails: []
     };
     this.handleAuthClick = this.handleAuthClick.bind(this);
     this.initClient = this.initClient.bind(this);
     this.updateSigninStatus = this.updateSigninStatus.bind(this);
     this.setCalendarEvent = this.setCalendarEvent.bind(this);
+    this.getAttendeesEmails = this.getAttendeesEmails.bind(this);
+  }
+
+  componentDidMount() {
+    this.getAttendeesEmails();
   }
 
   handleClientLoad() {
@@ -29,17 +35,16 @@ class GoogleCalendar extends React.Component {
       // Listen for sign-in state changes.
       gapi.auth2.getAuthInstance().isSignedIn;
 
-      if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
-        var profile = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
-        var adminEmail = profile.getEmail();
-        this.setState({adminEmail: adminEmail});
-        console.log(this.state.adminEmail);
-      }
+      // if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
+      //   var profile = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
+      //   var adminEmail = profile.getEmail();
+      //   this.setState({adminEmail: adminEmail});
+      //   console.log(this.state.adminEmail);
+      // }
 
       // Handle the initial sign-in state.
       this.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
       gapi.auth2.getAuthInstance().signIn();
-
     });
   }
 
@@ -54,14 +59,32 @@ class GoogleCalendar extends React.Component {
     this.handleClientLoad();
   }
 
+  getAttendeesEmails() {
+    var userIdList = [];
+    for (var i = 0; i < this.props.event.attendees.length; i++) {
+      userIdList.push(+this.props.event.attendees[i].user_id);
+    }
+    $.ajax({
+      url: 'events/users/emails',
+      method: 'GET',
+      data: {
+        user_ids: JSON.stringify(userIdList)
+      },
+      success: (data) => {
+        this.setState({attendeesEmails: data});
+      },
+      error: (err) => {
+        console.log(err, 'AJAX did not succeed');
+      }
+    })
+  }
+
   // Load the API and make an API call.  Display the results on the screen.
   setCalendarEvent() {
-    console.log(this.props.event);
-
     var emails = [];
 
-    for (var i = 0; i < this.props.friends.length; i++) {
-      emails.push(this.props.friends[i].email);
+    for (var i = 0; i < this.state.attendeesEmails.length; i++) {
+      emails.push(this.state.attendeesEmails[i].email);
     }
 
     var apiEmailArray = [];
@@ -89,16 +112,14 @@ class GoogleCalendar extends React.Component {
       'calendarId': 'primary',
       'resource': event
     }).then(() => {
-      console.log(`Event: '${this.props.event.title}' is now set on your Google Calendar`);
+      alert(`Event: '${this.props.event.title}' is now set on you and your guests' Google Calendars`);
     });
-
-    console.log('making api call');
   }
 
   render () {
     return (
       <div>
-        <button onClick={this.handleAuthClick} id="authorize-button">Set Event on Google Calendar</button>
+        <button onClick={this.handleAuthClick} id="authorize-button" className="google-calendar-button">Send Calendar Invite</button>
       </div>
     )
   }

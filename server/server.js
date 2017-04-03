@@ -36,6 +36,8 @@ app.get('/chatRoom', passport.authenticate('facebook-token'), handler.getChat);
 
 app.post('/events/users', passport.authenticate('facebook-token'), handler.addUsersEvents);
 
+app.get('/events/users/emails', handler.getAttendeesEmails);
+
 app.post('/events/create', passport.authenticate('facebook-token'), handler.createEvent);
 
 app.post('/accept', passport.authenticate('facebook-token'), handler.acceptEvent);
