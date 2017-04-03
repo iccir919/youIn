@@ -116,8 +116,7 @@ class FriendEventListItem extends React.Component {
           onIn={this.onAcceptClick.bind(this)}
           onOut={this.onRejectClick.bind(this)}
           event={this.props.event}
-          eventId = {this.props.event.event_id} /> : '' }
-
+          eventId = {this.props.event.event_id} />
       </div>
     );
   }

@@ -30,13 +30,13 @@ app.get('/events', passport.authenticate('facebook-token'), handler.getEvents);
 
 app.get('/users', handler.getUsers);
 
-app.get('/user', handler.getUser);
+app.get('/user', passport.authenticate('facebook-token'), handler.getUser);
 
 app.get('/chatRoom', passport.authenticate('facebook-token'), handler.getChat);
 
 app.post('/events/users', passport.authenticate('facebook-token'), handler.addUsersEvents);
 
-app.get('/events/users/emails', handler.getAttendeesEmails);
+app.get('/events/users/emails', passport.authenticate('facebook-token'), handler.getAttendeesEmails);
 
 app.post('/events/create', passport.authenticate('facebook-token'), handler.createEvent);
 

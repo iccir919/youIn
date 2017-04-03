@@ -1,7 +1,7 @@
 import React from 'react';
 import $ from 'jquery';
 import io from 'socket.io-client';
-import ChatMessageList from './ChatMessageList.jsx'
+import ChatMessageList from './ChatMessageList.jsx';
 
 const socket = io();
 
@@ -38,7 +38,7 @@ class ChatRoom extends React.Component {
       message: this.state.input,
       user: this.state.user,
       eventId: this.props.eventId
-    }
+    };
     $.ajax({
       url: '/chatRoom',
       method: 'POST',
@@ -51,7 +51,7 @@ class ChatRoom extends React.Component {
       error: function(err) {
         console.log('error in ajax request in ChatRoom', err);
       }
-    })    
+    });
   }
 
   componentDidMount(){

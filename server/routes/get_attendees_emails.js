@@ -3,7 +3,6 @@
 let db = require('../config');
 
 module.exports = function(req, res) {
-  console.log(req.query.user_ids, typeof(req.query.user_ids));
   var user_ids = JSON.parse(req.query.user_ids);
   var offset = 1;
   var placeholders = user_ids.map(function(name,i) {
@@ -19,7 +18,4 @@ module.exports = function(req, res) {
   .catch( (err) => {
     res.status(500).send(err, 'Error in get_users handler function');
   })
-
-
-
-}
+};

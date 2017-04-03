@@ -3,16 +3,19 @@ import OwnerDetailedView from './OwnerDetailedView.jsx';
 import moment from 'moment';
 import $ from 'jquery';
 import GoogleCalendar from './GoogleCalendar.jsx';
+import _ from 'lodash';
 
 class OwnerEventListItem extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       clicked: false,
-      result: ''
+      result: '5',
+      votes: []
     }
     this.handleClickListItem = this.handleClickListItem.bind(this);
     this.handleVotes = this.handleVotes.bind(this);
+    this.setResult = this.setResult.bind(this);
   }
 
   componentDidMount() {
@@ -40,7 +43,7 @@ class OwnerEventListItem extends React.Component {
         this.setState({
           votes: data
         }, () => {
-          console.log('hello', this.state.votes)
+          console.log('hello', this.state.votes);
         })
       },
       error: (err) => {
@@ -50,14 +53,16 @@ class OwnerEventListItem extends React.Component {
   }
 
   setResult(event) {
-    this.setState({
-      result: event.target.result
-    })
+    event.preventDefault();
+    var largestCount = _.maxBy(this.state.votes, function(vote) { return vote.count; });
+    var resultDate = new Date(largestCount.date).toISOString();
+    this.setState({result: resultDate}, () => {
+      this.setState({result: this.state.result});
+    });
   }
 
   render() {
     let date = moment(this.props.event.date);
-    console.log(this.props.event);
 
     return (
       <div>
@@ -68,7 +73,7 @@ class OwnerEventListItem extends React.Component {
             <div>
               { this.state.votes &&
                 this.state.votes.map((vote, i) => (
-                  <li key={i} result={new Date(vote.date).toDateString()} onClick={this.setResult}>{new Date(vote.date).toDateString()}: {vote.count}</li>
+                  <li key={i} value={new Date(vote.date).toDateString()} onClick={this.setResult}>{new Date(vote.date).toDateString()}: {vote.count}</li>
                 ))}
             </div>
 

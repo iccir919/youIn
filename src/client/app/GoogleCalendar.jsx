@@ -34,14 +34,6 @@ class GoogleCalendar extends React.Component {
     }).then(() => {
       // Listen for sign-in state changes.
       gapi.auth2.getAuthInstance().isSignedIn;
-
-      // if (gapi.auth2.getAuthInstance().isSignedIn.get()) {
-      //   var profile = gapi.auth2.getAuthInstance().currentUser.get().getBasicProfile();
-      //   var adminEmail = profile.getEmail();
-      //   this.setState({adminEmail: adminEmail});
-      //   console.log(this.state.adminEmail);
-      // }
-
       // Handle the initial sign-in state.
       this.updateSigninStatus(gapi.auth2.getAuthInstance().isSignedIn.get());
       gapi.auth2.getAuthInstance().signIn();
@@ -81,6 +73,7 @@ class GoogleCalendar extends React.Component {
 
   // Load the API and make an API call.  Display the results on the screen.
   setCalendarEvent() {
+    console.log(this.props.result);
     var emails = [];
 
     for (var i = 0; i < this.state.attendeesEmails.length; i++) {
@@ -97,14 +90,14 @@ class GoogleCalendar extends React.Component {
       'location': this.props.event.location,
       'description': this.props.event.description,
       'start': {
-        // 'dateTime': this.props.event.time,
-        'dateTime': '2017-04-02T09:00:00-07:00',
+        'dateTime': this.props.result,
         'timeZone': 'America/Los_Angeles'
       },
       'end': {
-        'dateTime': '2017-04-02T17:00:00-07:00',
+        'dateTime': `${this.props.result.slice(0, 14)}59:00-07:00`,
         'timeZone': 'America/Los_Angeles'
       },
+      // endTimeUnspecified: true,
       'attendees': apiEmailArray
     };
 
