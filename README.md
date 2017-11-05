@@ -4,12 +4,20 @@
 So? Are **You In**?
 
 
-### Team
+### Originally Created By
 
  - Anthony Bianco
  - Nicholas Below
  - David Brodie
  - Augustus Brennan
+ 
+### With Added Contributions By
+
+ - Andy Yeo
+ - Kay Albito
+ - Neil Ricci
+ - Johnny Chen
+
 
  ### Table of Contents
 
